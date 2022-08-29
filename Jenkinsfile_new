@@ -2,7 +2,8 @@ pipeline{
     //Directives
     agent any
     tools {
-        maven 'maven'
+        maven 'maven3'
+        jdk 'JDK8'
     }
 
     stages {
