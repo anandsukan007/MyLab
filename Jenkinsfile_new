@@ -25,18 +25,22 @@ pipeline{
                 
         stage('publish to nexus'){
            steps{
+               script {
+               
+               def NexusRepo = Version.endswith("SNAPSHOT") ? "anand-SNAPSHOT" : "anand-Release"
               nexusArtifactUploader artifacts: 
               [[artifactId: "${ArtifactId}", 
               classifier: '', 
-              file: 'target/VinayDevOpsLab-0.0.3-SNAPSHOT.war', 
+              file: "target/${ArtifactId}-${Version}.war", 
               type: 'war']], 
               credentialsId: 'c6234a30-c694-4a55-ba61-9b88c823a278', 
               groupId: "${GroupId}", 
               nexusUrl: '172.31.37.64:8081', 
               nexusVersion: 'nexus3', 
               protocol: 'http', 
-              repository: 'anand-SNAPSHOT', 
+              repository: "${NexusRepo}", 
               version: "${Version}"
+              }
         }
         }
         
