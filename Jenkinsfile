@@ -4,6 +4,12 @@ pipeline{
     tools {
         maven 'maven3'
     }
+    environment{
+       ArtifactId = readMavenPom().getArtifactId()
+       Version = readMavenPom().getVersion()
+       Name = readMavenPom().getName()
+       GroupId = readMavenPom().getGroupId()
+       }
 
     stages {
         // Specify various stage with in stages
@@ -26,17 +32,17 @@ pipeline{
         stage ('publish to Nexus'){
             steps{
                 nexusArtifactUploader artifacts: 
-                [[artifactId: 'AnandDevOpsLab', 
+                [[artifactId: "${ArtifactId}", 
                 classifier: '', 
-                file: 'target/AnandDevOpsLab-0.1-SNAPSHOT.war', 
+                file: "target/${ArtifactId}-${Version}.war", 
                 type: 'war']], 
                 credentialsId: 'd4ccc5a3-0ed9-417a-90e5-55e25ac684e4', 
-                groupId: 'com.ananddevopslab', 
+                groupId: "${GroupId}", 
                 nexusUrl: '172.31.37.64:8081', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
-                repository: 'AnandDevOpsLab-SNAPSHOT', 
-                version: '0.1-SNAPSHOT'
+                repository: "${NexusRepo}", 
+                version: "${Version}"
             }
         }
 
