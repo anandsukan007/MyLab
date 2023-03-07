@@ -25,7 +25,18 @@ pipeline{
         
         stage ('publish to Nexus'){
             steps{
-                nexusArtifactUploader artifacts: [[artifactId: 'AnandDevOpsLab', classifier: '', file: 'target/AnandDevOpsLab-0.1-SNAPSHOT.war', type: 'war']], credentialsId: 'd4ccc5a3-0ed9-417a-90e5-55e25ac684e4', groupId: 'com.ananddevopslab', nexusUrl: '172.31.37.64:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'AnandDevOpsLab-SNAPSHOT', version: '0.1-SNAPSHOT'
+                nexusArtifactUploader artifacts: 
+                [[artifactId: 'AnandDevOpsLab', 
+                classifier: '', 
+                file: 'target/AnandDevOpsLab-0.1-SNAPSHOT.war', 
+                type: 'war']], 
+                credentialsId: 'd4ccc5a3-0ed9-417a-90e5-55e25ac684e4', 
+                groupId: 'com.ananddevopslab', 
+                nexusUrl: '172.31.37.64:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'AnandDevOpsLab-SNAPSHOT', 
+                version: '0.1-SNAPSHOT'
             }
         }
 
