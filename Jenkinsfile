@@ -31,6 +31,8 @@ pipeline{
         
         stage ('publish to Nexus'){
             steps{
+                script {
+                   def NexusRepo = Version.endsWith("SNAPSHOT") ? "AnandDevOpsLab-SNAPSHOT" : "AnandDevOpsLab-Release"
                 nexusArtifactUploader artifacts: 
                 [[artifactId: "${ArtifactId}", 
                 classifier: '', 
@@ -41,8 +43,9 @@ pipeline{
                 nexusUrl: '172.31.37.64:8081', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
-                repository: 'AnandDevOpsLab-SNAPSHOT', 
+                    repository: "${NexusRepo}", 
                 version: "${Version}"
+                }
             }
         }
 
